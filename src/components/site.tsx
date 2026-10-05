@@ -33,7 +33,7 @@ export function Placeholder({ children }: { children: ReactNode }) {
   return <span className="inline-block rounded-sm border border-dashed border-coral-deep/50 bg-accent px-2 py-0.5 text-sm font-medium text-coral-deep">{children}</span>;
 }
 
-export const makeHead = (title: string, description: string, path: string) => {
+export const makeHead = (title: string, description: string, path?: string) => {
   const full = title.includes(siteName) ? title : `${title} | ${siteName}`;
   return {
     meta: [
@@ -43,10 +43,10 @@ export const makeHead = (title: string, description: string, path: string) => {
       { property: "og:title", content: full },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: path },
+      ...(path ? [{ property: "og:url", content: path }] : []),
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: path }],
+    links: path ? [{ rel: "canonical", href: path }] : [],
   };
 };
 
